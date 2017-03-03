@@ -11,8 +11,7 @@ class UnaryConstraint:
         self.var = var
 
     def isSatisfied(self, value):
-        return BadValueConstraint.isSatisfied(value) \
-               and GoodValueConstraint.isSatisfied(value)
+        util.raiseNotDefined()
 
     def affects(self, var):
         return var == self.var
@@ -66,7 +65,7 @@ class BinaryConstraint:
         self.var2 = var2
 
     def isSatisfied(self, value1, value2):
-        return NotEqualConstraint.isSatisfied(value1, value2)
+        util.raiseNotDefined()
 
     def affects(self, var):
         return var == self.var1 or var == self.var2
@@ -319,11 +318,11 @@ def minimumRemainingValuesHeuristic(assignment, csp):
                 nextVar = var
                 minNum = num
             elif num == minNum:
-                nextVar = degreeHeuristic(nextVar, var, csp, assignment, domains)
+                nextVar = degreeHeuristic(nextVar, var, csp, assignment)
     return nextVar
 
 
-def degreeHeuristic(var1, var2, csp, assignment, domains):
+def degreeHeuristic(var1, var2, csp, assignment):
     degree1 = 0
     degree2 = 0
     for binaryConstraint in csp.binaryConstraints:
@@ -372,8 +371,27 @@ def leastConstrainingValuesHeuristic(assignment, csp, var):
     """Hint: Creating a helper function to count the number of constrained values might be useful"""
     """Question 3"""
     """YOUR CODE HERE"""
+    toSort = []
+    sort = []
+    for value in values:
+        count = countConstrainedValue(assignment, csp, value, var)
+        toSort.append((count, value))
+    toSort.sort()
+    for count, val in toSort:
+        sort.append(val)
+    return sort
 
-    return values
+
+def countConstrainedValue(assignment, csp, value, var):
+    domains = assignment.varDomains
+    count = 0
+    # get all the binary constraint that affect var
+    for binaryConstraint in (bc for bc in csp.binaryConstraints if bc.affects(var)):
+        other = binaryConstraint.otherVariable(var)
+        for v in domains[other]:
+            if not binaryConstraint.isSatisfied(value, v):
+                count += 1
+    return count
 
 
 """
