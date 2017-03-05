@@ -1,0 +1,53 @@
+aa R G B
+ab R G B
+ac R G B
+ba R G B
+bb R G B
+bc R G B
+ca R G B
+cb R G B
+cc R G B
+0
+NotEqualConstraint aa ab
+NotEqualConstraint aa ac
+NotEqualConstraint aa ba
+NotEqualConstraint aa ca
+NotEqualConstraint ab aa
+NotEqualConstraint ab ac
+NotEqualConstraint ab bb
+NotEqualConstraint ab cb
+NotEqualConstraint ac aa
+NotEqualConstraint ac ab
+NotEqualConstraint ac bc
+NotEqualConstraint ac cc
+NotEqualConstraint ac bb
+NotEqualConstraint ac ca
+NotEqualConstraint ba aa
+NotEqualConstraint ba ca
+NotEqualConstraint ba bb
+NotEqualConstraint ba bc
+NotEqualConstraint bb ab
+NotEqualConstraint bb cb
+NotEqualConstraint bb ba
+NotEqualConstraint bb bc
+NotEqualConstraint bb ac
+NotEqualConstraint bb ca
+NotEqualConstraint bc ac
+NotEqualConstraint bc cc
+NotEqualConstraint bc ba
+NotEqualConstraint bc bb
+NotEqualConstraint ca aa
+NotEqualConstraint ca ba
+NotEqualConstraint ca cb
+NotEqualConstraint ca cc
+NotEqualConstraint ca bb
+NotEqualConstraint ca ac
+NotEqualConstraint cb ab
+NotEqualConstraint cb bb
+NotEqualConstraint cb ca
+NotEqualConstraint cb cc
+NotEqualConstraint cc ac
+NotEqualConstraint cc bc
+NotEqualConstraint cc ca
+NotEqualConstraint cc cb
+0

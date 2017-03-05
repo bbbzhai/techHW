@@ -49,7 +49,8 @@ questionValues = {
     'q3': 2,
     'q4': 4,
     'q5': 4,
-    'q6': 2
+    'q6': 2,
+    'q7': 2
 }
 
 """ Runs a single test. Either prints correct or a failure message.
