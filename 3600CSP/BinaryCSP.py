@@ -619,6 +619,44 @@ def AC3(assignment, csp):
     """Question 6"""
     """YOUR CODE HERE"""
 
+    queue = set([])
+    for constraint in csp.binaryConstraints:
+        queue.add(constraint)
+    while not len(queue) == 0:
+        constraint = queue.pop()
+        xi = constraint.var1
+        xj = constraint.var2
+        oldSize = len(assignment.varDomains[xj])
+        oldSize2 = len(assignment.varDomains[xi])
+        reviseinferences = revise(assignment, csp, xi, xj, constraint)
+        reviseinferences2 = revise(assignment, csp, xj, xi, constraint)
+        #if revise inference doesn't work, simple restore and return
+        if reviseinferences is None:
+            for var, val in inferences:
+                assignment.varDomains[var].add(val)
+            return None
+        else:
+            inferences = inferences.union(reviseinferences)
+        if reviseinferences2 is None:
+            for var2, val2 in inferences:
+                assignment.varDomains[var2].add(val2)
+            return None
+        else:
+            inferences = inferences.union(reviseinferences2)
+        if len(assignment.varDomains[xj]) < oldSize:
+            if len(assignment.varDomains[xj]) == 0:
+                return None
+            for cK in (allcK for allcK in csp.binaryConstraints if allcK.affects(xj) and not allcK.affects(xi)):
+                    queue.add(cK)
+            for cK2 in (allcK2 for allcK2 in csp.binaryConstraints if allcK2.affects(xi) and not allcK2.affects(xj)):
+                    queue.add(cK2)
+        if len(assignment.varDomains[xi]) < oldSize2:
+            if len(assignment.varDomains[xi]) == 0:
+                return None
+            for cK in (allcK for allcK in csp.binaryConstraints if allcK.affects(xj) and not allcK.affects(xi)):
+                    queue.add(cK)
+            for cK2 in (allcK2 for allcK2 in csp.binaryConstraints if allcK2.affects(xi) and not allcK2.affects(xj)):
+                    queue.add(cK2)
     return assignment
 
 
