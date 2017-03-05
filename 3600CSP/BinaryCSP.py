@@ -426,8 +426,21 @@ def forwardChecking(assignment, csp, var, value):
     domains = assignment.varDomains
     """Question 4"""
     """YOUR CODE HERE"""
-
+    # all unassigned variables connected to the input variable by bc are considered
+    for binaryConstraint in (bc for bc in csp.binaryConstraints if bc.affects(var)):
+        other = binaryConstraint.otherVariable(var)
+        # because the variable is changing during the loop, make a copy first
+        holder = set(domains[other])
+        for v in (allV for allV in holder if not binaryConstraint.isSatisfied(value, allV)):
+            inferences.add((other, v))
+            domains[other].remove(v)
+            # check empty domains, if empty, means failure, then reverse
+            if len(domains[other]) == 0:
+                for var, val in inferences:
+                    domains[var].add(val)
+                return None
     return inferences
+
 
 
 """
@@ -461,7 +474,22 @@ def forwardChecking(assignment, csp, var, value):
 def recursiveBacktrackingWithInferences(assignment, csp, orderValuesMethod, selectVariableMethod, inferenceMethod):
     """Question 4"""
     """YOUR CODE HERE"""
+    if assignment.isComplete():
+        return assignment
+    var = selectVariableMethod(assignment, csp)
+    for value in orderValuesMethod(assignment, csp, var):
+        if consistent(assignment, csp, var, value):
+            assignment.assignedValues[var] = value
+            inference = inferenceMethod(assignment, csp, var, value)
+            if inference is not None:
+                result = recursiveBacktrackingWithInferences(assignment, csp, orderValuesMethod, selectVariableMethod, inferenceMethod)
+                if result is not None:
+                    return result
+                for var1, val1 in inference:
+                    assignment.varDomains[var1].add(val1)
+            assignment.assignedValues[var] = None
     return None
+
 
 
 """
