@@ -1,0 +1,6 @@
+solve
+csp csps/extraChessQ.csp
+function leastConstrainingValuesHeuristic
+function minimumRemainingValuesHeuristic
+function maintainArcConsistency
+boolean True

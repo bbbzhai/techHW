@@ -92,6 +92,17 @@ class NotEqualConstraint(BinaryConstraint):
         return 'NotEqualConstraint (%s, %s)' % (str(self.var1), str(self.var2))
 
 
+class QueenConstraint(BinaryConstraint):
+    def isSatisfied(self, value1, value2):
+        x1 = int(value1[0])
+        y1 = int(value1[1])
+        x2 = int(value2[0])
+        y2 = int(value2[1])
+        return not (x1 == x2 or y1 == y2 or abs(x1 - x2) == abs(y1-y2))
+    def __repr__(self):
+        return "QueenConstraint (%s, %s)" % (str(self.var1), str(self.var2))
+
+
 class ConstraintSatisfactionProblem:
     """
     Structure of a constraint satisfaction problem.

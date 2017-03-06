@@ -1,0 +1,5 @@
+correct = 'Any dictionary where every variable is assigned a value in its domain'
+if result is None:
+	success = False
+else:
+    	success = True
